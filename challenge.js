@@ -78,31 +78,25 @@
 // console.log(inputValue);
 
 function passwordChecker() {
-    const check = prompt("Enter Your Password");
-    const result = check.length >= 8;
-    const checkUppercase = /[A-Z]/.test(check);
-    const checkLowercase = /[a-z]/.test(check);
-    const numberRegex = /^[0-9]+$/.test(check);
-    const checkCharacters = /[!@#$%^&*(),.?":{}|<>]/.test(check);
+    let check = prompt("Enter Your Password");
+    let result = check.length >= 8;
+    let checkUppercase = /[A-Z]/.test(check);
+    let checkLowercase = /[a-z]/.test(check);
+    let numberRegex = /\d/.test(check);
+    let checkCharacters = /[!@#$%^&*(),.?":{}|<>]/.test(check);
     
-    const weak = checkLowercase && checkUppercase;
-    const medium = result && (checkLowercase || checkUppercase);
-    const strong = result && (checkLowercase || checkUppercase || numberRegex || checkCharacters);
     let  strength = "weak";
-    if (weak) {
-        strength
-        console.log("weak");
-    }else if (medium) {
-        strength = "medium";
-        console.log("medium");
-    } else if (strong) {
+    if (result && checkUppercase && checkLowercase && numberRegex && checkCharacters) {
         strength = "strong";
-        console.log("strong");
+    } else if (result && (checkUppercase || checkLowercase || numberRegex)) {
+        strength = "medium";
     }
-    const proceed = confirm(`your password is ${strength}  \n do you want to proceed?`);
+
+    let proceed = confirm(`Your password is ${strength}. Do you want to continue`);
+
     if (proceed) {
         alert("password accepted");
-    } else{
-        passwordChecker();
+    }else {
+        passwordChecker(); // prompt user for a new password
     }
 }
